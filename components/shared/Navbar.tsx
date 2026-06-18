@@ -1,7 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import logo from "@/assets/icons/navbar/kodesklogo.png";
+import { ServiceStrip } from "@/components/shared/ServiceStrip";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -14,43 +17,72 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const servicesActive = pathname === "/services" || pathname.startsWith("/services/");
+  const showServiceStrip = pathname === "/services";
 
   return (
-    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between rounded-[1.2rem] border border-white/20 bg-[linear-gradient(180deg,rgba(97,91,91,0.82),rgba(71,66,66,0.78))] px-4 py-3 text-white shadow-[0_12px_34px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:px-5">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-xl font-semibold tracking-[0.25em]">
-            <span className="text-[#ff8a24]">K</span>ODESK
-          </span>
-        </Link>
+    <header className="absolute left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-4">
+      <div
+        className={`mx-auto flex w-full max-w-[1400px] flex-col rounded-[1.2rem] border border-white/20 bg-[rgba(250,247,241,0.72)] px-5 py-3 text-slate-900 shadow-[0_10px_26px_rgba(0,0,0,0.12)] backdrop-blur-xl lg:px-8 ${
+          servicesActive ? "pb-2" : ""
+        }`}
+      >
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/" className="flex shrink-0 items-center">
+            <Image
+              src={logo}
+              alt="Kodesk"
+              priority
+              className="h-12 w-auto sm:h-14"
+            />
+          </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
-          {navItems.map((item) => {
-            const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname === item.href || pathname.startsWith(`${item.href}/`);
+          <nav className="hidden flex-1 items-center justify-center gap-10 lg:flex">
+            {navItems.map((item) => {
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : item.href === "/services"
+                    ? servicesActive
+                    : pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const linkClass = servicesActive
+                ? active
+                  ? "text-[#2453f5]"
+                  : "text-slate-700 hover:text-[#2453f5]"
+                : active
+                  ? "text-[#2453f5] underline decoration-[#2453f5] decoration-2 underline-offset-8"
+                  : "text-slate-900 hover:text-[#2453f5]";
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-sm font-medium transition hover:text-white ${
-                  active ? "text-white" : "text-white/90"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-[1.02rem] font-medium transition ${linkClass}`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-        <Link
-          href="/about"
-          className="rounded-full bg-[linear-gradient(90deg,#5d63d1_0%,#ff8a24_100%)] px-4 py-2 text-sm font-medium text-white shadow-[0_10px_20px_rgba(63,74,184,0.3)] transition hover:brightness-110"
-        >
-          Book a Tour
-        </Link>
+          <Link
+            href="/contact"
+            className={`rounded-xl px-5 py-2.5 text-sm font-medium text-white transition hover:brightness-110 ${
+              servicesActive
+                ? "bg-[#ff8a24] shadow-[0_10px_22px_rgba(255,138,36,0.24)]"
+                : "bg-[linear-gradient(90deg,#ff8a24_0%,#5d63d1_100%)] shadow-[0_10px_22px_rgba(255,138,36,0.24)]"
+            }`}
+          >
+            Book a Tour
+          </Link>
+        </div>
+
+        {showServiceStrip ? (
+          <div className="mt-0 border-t border-slate-200/80 pt-0">
+            <ServiceStrip />
+          </div>
+        ) : null}
+
       </div>
     </header>
   );

@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import heroImage from "@/assets/images/about/main.png";
 
 type PlaceholderPageProps = {
   eyebrow: string;
@@ -20,33 +22,46 @@ export function PlaceholderPage({
   secondaryLabel,
 }: PlaceholderPageProps) {
   return (
-    <section className="bg-[#f2f2ef] px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:p-12">
-        <p className="text-sm uppercase tracking-[0.35em] text-[#5d63d1]">
-          {eyebrow}
-        </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
-          {title}
-        </h1>
-        <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-600">
-          {description}
-        </p>
+    <section className="bg-[#f2f2ef]">
+      <div className="relative isolate overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src={heroImage}
+            alt=""
+            fill
+            priority
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_transparent_30%),linear-gradient(180deg,rgba(18,18,18,0.28),rgba(18,18,18,0.56))]" />
+        </div>
 
-        <div className="mt-8 flex flex-wrap gap-4">
-          <Link
-            href={primaryHref}
-            className="rounded-full bg-[#24316d] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#1d2757]"
-          >
-            {primaryLabel}
-          </Link>
-          {secondaryHref && secondaryLabel ? (
+        <div className="relative mx-auto flex min-h-[56vh] max-w-4xl flex-col justify-center px-4 py-28 text-center sm:px-6 lg:px-8 lg:py-32">
+          <p className="text-sm uppercase tracking-[0.35em] text-white/78">
+            {eyebrow}
+          </p>
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            {title}
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/80">
+            {description}
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
-              href={secondaryHref}
-              className="rounded-full border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+              href={primaryHref}
+              className="rounded-full bg-[#24316d] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#1d2757]"
             >
-              {secondaryLabel}
+              {primaryLabel}
             </Link>
-          ) : null}
+            {secondaryHref && secondaryLabel ? (
+              <Link
+                href={secondaryHref}
+                className="rounded-full border border-white/35 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+              >
+                {secondaryLabel}
+              </Link>
+            ) : null}
+          </div>
         </div>
       </div>
     </section>

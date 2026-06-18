@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import heroImage from "@/assets/images/about/main.png";
 import storyImage from "@/assets/images/about/Story.png";
@@ -301,7 +301,7 @@ export default function AboutPage() {
               {communityPoints.map((point) => (
                 <li key={point} className="flex items-start gap-3 text-sm text-slate-700">
                   <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full border border-[#ff8a24] text-[11px] leading-none text-[#ff8a24]">
-                    ✓
+                    &#10003;
                   </span>
                   <span>{point}</span>
                 </li>
@@ -381,3 +381,4 @@ export default function AboutPage() {
     </div>
   );
 }
+
