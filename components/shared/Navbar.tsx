@@ -23,9 +23,7 @@ export function Navbar() {
   return (
     <header className="absolute left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-4">
       <div
-        className={`mx-auto flex w-full max-w-[1400px] flex-col rounded-[1.2rem] border border-white/20 bg-[rgba(250,247,241,0.72)] px-5 py-3 text-slate-900 shadow-[0_10px_26px_rgba(0,0,0,0.12)] backdrop-blur-xl lg:px-8 ${
-          servicesActive ? "pb-2" : ""
-        }`}
+        className={`mx-auto flex w-full max-w-[1400px] flex-col rounded-[1.2rem] ${servicesActive ? 'border border-slate-200 bg-white' : 'border border-white/20 bg-[rgba(250,247,241,0.72)] backdrop-blur-xl'} px-5 py-3 text-slate-900 shadow-[0_10px_26px_rgba(0,0,0,0.12)] lg:px-8 ${servicesActive ? 'pb-2' : ''}`}
       >
         <div className="flex items-center justify-between gap-4">
           <Link href="/" className="flex shrink-0 items-center">
@@ -47,7 +45,7 @@ export function Navbar() {
                     : pathname === item.href || pathname.startsWith(`${item.href}/`);
               const linkClass = servicesActive
                 ? active
-                  ? "text-[#2453f5]"
+                  ? "text-[#2453f5] underline decoration-[#2453f5] decoration-2 underline-offset-8"
                   : "text-slate-700 hover:text-[#2453f5]"
                 : active
                   ? "text-[#2453f5] underline decoration-[#2453f5] decoration-2 underline-offset-8"
