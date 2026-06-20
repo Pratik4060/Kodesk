@@ -36,20 +36,20 @@ export function ServiceStrip() {
   };
 
   return (
-    <div className="bg-white px-0 py-0">
+    <div className="bg-white px-3 py-3 shadow-sm sm:px-4">
       <div className="flex items-start gap-2 sm:gap-3">
         <button
           type="button"
           aria-label="Scroll services left"
           onClick={() => scrollByAmount(-280)}
-          className="mt-9 hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-800 transition hover:bg-slate-50 md:flex"
+          className="mt-6 hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-800 transition hover:bg-slate-50 md:flex"
         >
           <ChevronButton direction="left" />
         </button>
 
         <div
           ref={rowRef}
-          className="flex flex-1 gap-2 overflow-x-auto scroll-smooth px-1 pb-1 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
+          className="flex flex-1 gap-3 overflow-x-auto scroll-smooth px-2 pb-2 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-4"
         >
           {serviceNavItems.map((item) => {
             const href = buildHref(item.slug);
@@ -59,11 +59,13 @@ export function ServiceStrip() {
               (pathname === "/services" && item.slug === "day-pass");
 
             return (
-          <Link
+              <Link
                 key={item.slug}
                 href={href}
-                className={`flex min-w-[96px] flex-col items-center gap-2 rounded-[1rem] px-2 py-2 text-center transition hover:bg-slate-50 sm:min-w-[122px] sm:px-3 ${
-                  active ? "text-[#2453f5]" : "text-slate-800"
+                className={`flex min-w-[108px] flex-col items-center gap-2 rounded-[1.35rem] border border-slate-200/80 bg-white px-3 py-3 text-center transition hover:border-[#2453f5] hover:bg-slate-50 sm:min-w-[132px] ${
+                  active
+                    ? "text-[#2453f5] shadow-[0_10px_28px_rgba(36,49,109,0.08)]"
+                    : "text-slate-800"
                 }`}
               >
                 {"icon" in item && item.icon ? (

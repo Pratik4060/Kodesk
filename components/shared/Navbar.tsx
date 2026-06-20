@@ -20,13 +20,13 @@ export function Navbar() {
   const servicesActive = pathname === "/services" || pathname.startsWith("/services/");
   const showServiceStrip = pathname === "/services";
 
+  const wrapperClasses = servicesActive
+    ? "mx-auto flex w-full max-w-[1400px] flex-col rounded-[1.5rem] border border-slate-200/80 bg-white px-5 py-4 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,0.12)] lg:px-8"
+    : "mx-auto flex w-full max-w-[1400px] flex-col rounded-[1.2rem] border border-white/20 bg-[rgba(250,247,241,0.72)] px-5 py-3 text-slate-900 shadow-[0_10px_26px_rgba(0,0,0,0.12)] backdrop-blur-xl lg:px-8";
+
   return (
     <header className="absolute left-0 right-0 top-0 z-50 px-3 pt-3 sm:px-4">
-      <div
-        className={`mx-auto flex w-full max-w-[1400px] flex-col rounded-[1.2rem] border border-white/20 bg-[rgba(250,247,241,0.72)] px-5 py-3 text-slate-900 shadow-[0_10px_26px_rgba(0,0,0,0.12)] backdrop-blur-xl lg:px-8 ${
-          servicesActive ? "pb-2" : ""
-        }`}
-      >
+      <div className={`${wrapperClasses} ${servicesActive ? "pb-2" : ""}`}>
         <div className="flex items-center justify-between gap-4">
           <Link href="/" className="flex shrink-0 items-center">
             <Image
@@ -45,12 +45,10 @@ export function Navbar() {
                   : item.href === "/services"
                     ? servicesActive
                     : pathname === item.href || pathname.startsWith(`${item.href}/`);
-              const linkClass = servicesActive
-                ? active
-                  ? "text-[#2453f5]"
-                  : "text-slate-700 hover:text-[#2453f5]"
-                : active
-                  ? "text-[#2453f5] underline decoration-[#2453f5] decoration-2 underline-offset-8"
+              const linkClass = active
+                ? "text-[#2453f5] underline decoration-[#2453f5] decoration-2 underline-offset-8"
+                : servicesActive
+                  ? "text-slate-700 hover:text-[#2453f5]"
                   : "text-slate-900 hover:text-[#2453f5]";
 
               return (
@@ -65,16 +63,22 @@ export function Navbar() {
             })}
           </nav>
 
-          <Link
-            href="/contact"
-            className={`rounded-xl px-5 py-2.5 text-sm font-medium text-white transition hover:brightness-110 ${
-              servicesActive
-                ? "bg-[#ff8a24] shadow-[0_10px_22px_rgba(255,138,36,0.24)]"
-                : "bg-[linear-gradient(90deg,#ff8a24_0%,#5d63d1_100%)] shadow-[0_10px_22px_rgba(255,138,36,0.24)]"
-            }`}
-          >
-            Book a Tour
-          </Link>
+<Link
+  href="/contact"
+  className="
+    inline-flex items-center justify-center
+    rounded-xl
+    bg-[linear-gradient(90deg,#3F51B5_0%,#F28C28_50%,#3F51B5_100%)]
+    bg-[length:200%_100%]
+    animate-gradient
+    px-7 py-3
+    text-white
+    font-medium
+    shadow-lg
+  "
+>
+  Book a Tour
+</Link>
         </div>
 
         {showServiceStrip ? (
