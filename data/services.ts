@@ -207,10 +207,10 @@ export const services: ServiceItem[] = [
 export const serviceDetailContent: Record<ServiceSlug, ServiceDetailContent> = {
   "day-pass": {
     heroDescription:
-      "One-day access to the full Kodesk workspace, perfect for occasional visits, client days, or a focused change of scenery.",
+      "One-day access to the full Kodesk workspace — perfect for occasional visits or trying us out.",
     overviewTitle: "What is Day Pass?",
     overviewBody:
-      "The Kodesk Day Pass is the easiest way to experience the workspace without a commitment. Walk in on any working day, pick a seat, and enjoy the full range of amenities for a productive day outside your home or hotel.",
+      "The Kodesk Day Pass is the easiest way to experience everything we offer — with absolutely no commitment. Walk in on any working day, choose a seat, and enjoy the full range of Kodesk amenities for the entire day. It's perfect for visitors, professionals in between memberships, or anyone who simply wants a productive workspace outside their home for a day.",
     audienceTitle: "Who Is This For ?",
     audience: [
       "Out-of-town business travellers",
@@ -222,9 +222,9 @@ export const serviceDetailContent: Record<ServiceSlug, ServiceDetailContent> = {
     benefits: [
       "Full access to shared workspace for one day",
       "High-speed Wi-Fi and power access at every seat",
-      "Complimentary tea, coffee, and pantry service",
+      "Complimentary tea, coffee, and pantry",
       "Access to printing and scanning services",
-      "Common area and lounge access throughout the day",
+      "Common area and lounge access",
       "No membership or registration required",
     ],
     features: [
