@@ -9,7 +9,7 @@ function Bullet({ children }: { children: string }) {
     <li className="flex gap-3 text-[0.98rem] leading-7 text-slate-700">
       <span className="mt-2.5 h-2.5 w-2.5 shrink-0 rounded-full border border-[#f3bc8b] bg-[#fff5ea]" />
       <span>{children}</span>
-    </li>
+    </li>   
   );
 }
 
