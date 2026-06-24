@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { ServiceItem } from "@/data/services";
-import { serviceDetailContent, services } from "@/data/services";
+import type { ServiceItem } from "@/data/service";
+import { serviceDetailContent, services } from "@/data/service";
 import communityImage from "@/assets/images/about/Community.png";
-import {ArcMenu} from "@/components/arcmenu";
+import {ArcMenu} from "@/components/ui/arcmenu";
 function Bullet({ children }: { children: string }) {
   return (
     <li className="flex gap-3 text-[0.98rem] leading-7 text-slate-700">
@@ -88,7 +88,7 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
               Get Started - Book a Tour
             </Link>
           </div>
-         <ArcMenu />
+          <ArcMenu />
         </div>
       </section>
 
@@ -96,7 +96,9 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
             <article>
-              <p className="text-sm font-medium text-slate-500">Service Overview</p>
+              <p className="text-sm font-medium text-slate-500">
+                Service Overview
+              </p>
               <h2 className="mt-8 text-2xl font-medium tracking-tight text-slate-900 sm:text-[1.7rem]">
                 {content.overviewTitle}
               </h2>
@@ -105,7 +107,9 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
               </p>
 
               <div className="mt-9">
-                <h3 className="text-lg font-medium text-slate-900">Key Benefits</h3>
+                <h3 className="text-lg font-medium text-slate-900">
+                  Key Benefits
+                </h3>
                 <ul className="mt-5 space-y-4">
                   {content.benefits.map((item) => (
                     <Bullet key={item}>{item}</Bullet>
@@ -115,9 +119,13 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
             </article>
 
             <aside className="lg:pt-8">
-              <div className="overflow-hidden rounded-[1.75rem] bg-[linear-gradient(160deg,#8d5cc6_0%,#5c65d8_46%,#ff8b22_100%)] p-6 text-white shadow-[0_20px_50px_rgba(52,62,145,0.22)] sm:p-7">
-                <h3 className="text-[1.15rem] font-medium">{content.audienceTitle}</h3>
-                <ul className="mt-6 space-y-4 text-[0.96rem] leading-7 text-white/88">
+              <div className="relative overflow-hidden rounded-[2rem] bg-[linear-gradient(120deg,#FC7B1B_1.33%,#3b82f6_40%,#0A43FF_98.87%)] bg-[length:400%] animate-gradient-slow p-8 text-white shadow-[0_20px_50px_rgba(52,62,145,0.22)] sm:p-10">
+                {/* Content */}
+                <h3 className="relative z-10 text-xl font-semibold tracking-tight">
+                  {content.audienceTitle}
+                </h3>
+
+                <ul className="relative z-10 mt-8 space-y-5 text-[1rem] leading-relaxed text-white/90">
                   {content.audience.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
@@ -125,7 +133,7 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
 
                 <Link
                   href="/contact"
-                  className="mt-8 inline-flex w-full items-center justify-center rounded-[0.75rem] border border-white/25 bg-white/10 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/15"
+                  className="relative z-10 mt-10 inline-flex w-full items-center justify-center rounded-xl border border-white/30 bg-white/10 px-5 py-4 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
                 >
                   Enquire Now
                 </Link>
@@ -135,22 +143,35 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
         </div>
       </section>
 
-      <section className="bg-[#e8e8e5] px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <section className="bg-[rgba(229,229,229,1)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        {" "}
         <div className="mx-auto max-w-7xl text-center">
-          <p className="text-sm font-medium text-[#2e53f4]">What&apos;s Included</p>
+          <p
+            className="
+    text-lg
+    font-medium
+    bg-[linear-gradient(90deg,#2947AA_0%,#FC7B1B_100%)]
+    bg-clip-text
+    text-transparent
+    inline-block
+  "
+          >
+            What's Included
+          </p>
           <h2 className="mt-3 text-3xl font-medium tracking-tight text-slate-900 sm:text-[2.1rem]">
             Features & Inclusions
           </h2>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-15 grid gap-8 mx-15 sm:grid-cols-2 lg:grid-cols-3">
             {content.features.map((item) => (
               <article
                 key={item.title}
-                className="rounded-[1rem] border border-white/70 bg-white px-5 py-8 text-slate-900 shadow-[0_12px_30px_rgba(10,16,40,0.05)]"
+                className="rounded-[1rem] border border-white/70 bg-white px-2 py-8  text-slate-900 shadow-[0_12px_30px_rgba(10,16,40,0.05)]"
               >
-                <h3 className="text-[1rem] font-medium tracking-tight">{item.title}</h3>
-                <div className="mx-auto mt-3 h-px w-32 bg-[linear-gradient(90deg,transparent,rgba(45,83,244,0.62),transparent)]" />
-                <p className="mx-auto mt-5 max-w-[18ch] text-sm leading-7 text-slate-500">
+                <h3 className="text-lg font-medium tracking-tight">
+                  {item.title}
+                </h3>
+                <div className="mx-auto mt-3 h-px w-62 bg-[linear-gradient(90deg,transparent,rgba(45,83,244,0.62),transparent)]" />
+                <p className="mx-auto mt-5 max-w-[25ch] text-md leading-7 text-slate-500">
                   {item.copy}
                 </p>
               </article>
@@ -168,15 +189,14 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
             sizes="100vw"
             className="object-cover object-center"
           />
-            <div className="absolute inset-0 bg-black/20"></div>
-
+          <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
         <div className="relative px-4 py-14 text-center text-white sm:px-6 sm:py-20 lg:px-8">
           <h2 className="text-2xl font-light tracking-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.2)] sm:text-[2.15rem]">
             {content.ctaTitle}
           </h2>
-<p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]">
             {content.ctaBody}
           </p>
 
@@ -233,8 +253,6 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
               </Link>
             ))}
           </div>
-
-
         </div>
       </section>
     </div>

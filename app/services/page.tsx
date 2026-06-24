@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { services, servicesOverview } from "@/data/services";
+import { services, servicesOverview } from "@/data/service";
 
-const ctaImage = services.find((service) => service.slug === "managed-office")
-  ?.image;
+const ctaImage = services.find(
+  (service) => service.slug === "managed-office",
+)?.image;
 
 const showcaseOrder = [
   { slug: "coworking-space", title: "Coworking Space" },
@@ -110,7 +111,9 @@ export default function ServicesPage() {
 
         <div className="mt-16 sm:mt-20">
           <div className="mx-auto flex w-fit flex-col items-center gap-2">
-            <p className="text-sm text-slate-500">Choose the Right Workspace for You</p>
+            <p className="text-sm text-slate-500">
+              Choose the Right Workspace for You
+            </p>
             <div className="h-px w-56 bg-[linear-gradient(90deg,transparent,rgba(17,26,61,0.35),rgba(255,138,36,0.55),transparent)]" />
           </div>
 
@@ -135,12 +138,16 @@ export default function ServicesPage() {
                       src={service.galleryImage}
                       alt={service.label}
                       fill
-                      className="object-contain p-0 transition duration-500 group-hover:scale-[1.02]"
+                      className="object-cover object-center p-0 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:contrast-105"
                     />
-                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-6 text-center">
-                      <h3 className="mx-auto max-w-[16ch] text-[1rem] font-medium leading-tight text-[#17234f] drop-shadow-[0_1px_1px_rgba(255,255,255,0.72)] sm:text-[1.08rem]">
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
+                    <div className="absolute left-6 top-6 flex h-[calc(100%-1.5rem)] w-2/3 flex-col justify-center items-start pointer-events-none">
+                      <h3 className="max-w-[16ch] text-[1rem] font-medium leading-tight text-[#17234f] drop-shadow-[0_1px_1px_rgba(255,255,255,0.72)] sm:text-[1.08rem]">
                         {service.title}
                       </h3>
+                      <p className="mt-3 max-w-[18ch] text-sm leading-6 text-white opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100">
+                        {service.description}
+                      </p>
                     </div>
                     <span
                       className={`absolute bottom-1 right-1 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-[0_10px_18px_rgba(15,23,42,0.18)] transition group-hover:scale-105 ${bubbleClass} sm:bottom-2 sm:right-2`}
