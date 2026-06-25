@@ -3,51 +3,19 @@ import Link from "next/link";
 import type { ServiceItem } from "@/data/service";
 import { serviceDetailContent, services } from "@/data/service";
 import communityImage from "@/assets/images/about/Community.png";
-import {ArcMenu} from "@/components/ui/arcmenu";
+import { ArcMenu } from "@/components/ui/arcmenu";
+import keybenefits from "@/assets/icons/services/keybenefits.svg";
+import ArrowIcon  from "@/components/ui/arrowicon";
 function Bullet({ children }: { children: string }) {
   return (
     <li className="flex gap-3 text-[0.98rem] leading-7 text-slate-700">
       <span className="mt-2.5 h-2.5 w-2.5 shrink-0 rounded-full border border-[#f3bc8b] bg-[#fff5ea]" />
       <span>{children}</span>
-    </li>   
+    </li>
   );
 }
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
-      <path
-        d="M7 17L17 7"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-      />
-      <path
-        d="M9 7h8v8"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
-function PlusIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-7 w-7">
-      <path
-        d="M12 5v14M5 12h14"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 export function ServiceDetail({ service }: { service: ServiceItem }) {
   const content = serviceDetailContent[service.slug];
@@ -96,30 +64,32 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
             <article>
-              <p className="text-sm font-medium text-slate-500">
-                Service Overview
-              </p>
+              <p className="text-lg font-medium ">Service Overview</p>
               <h2 className="mt-8 text-2xl font-medium tracking-tight text-slate-900 sm:text-[1.7rem]">
                 {content.overviewTitle}
               </h2>
-              <p className="mt-5 max-w-2xl text-[0.98rem] leading-8 text-slate-700">
+              <p className="mt-5 max-w-2xl text-[0.98rem] leading-8 ">
                 {content.overviewBody}
               </p>
 
               <div className="mt-9">
-                <h3 className="text-lg font-medium text-slate-900">
-                  Key Benefits
-                </h3>
+                <h3 className="text-lg font-medium ">Key Benefits</h3>
                 <ul className="mt-5 space-y-4">
                   {content.benefits.map((item) => (
-                    <Bullet key={item}>{item}</Bullet>
+                    <div
+                      key={item}
+                      className="flex items-center gap-3  leading-7 t"
+                    >
+                      <Image src={keybenefits} alt="checkmark" />
+                      <span>{item}</span>
+                    </div>
                   ))}
                 </ul>
               </div>
             </article>
 
-            <aside className="lg:pt-8">
-              <div className="relative overflow-hidden rounded-[2rem] bg-[linear-gradient(120deg,#FC7B1B_1.33%,#3b82f6_40%,#0A43FF_98.87%)] bg-[length:400%] animate-gradient-slow p-8 text-white shadow-[0_20px_50px_rgba(52,62,145,0.22)] sm:p-10">
+            <aside className="lg:pt-2 ">
+              <div className="gradient-card relative overflow-hidden rounded-[18px] mx-18 h-[520px] text-white sm:p-10">
                 {/* Content */}
                 <h3 className="relative z-10 text-xl font-semibold tracking-tight">
                   {content.audienceTitle}
@@ -133,7 +103,7 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
 
                 <Link
                   href="/contact"
-                  className="relative z-10 mt-10 inline-flex w-full items-center justify-center rounded-xl border border-white/30 bg-white/10 px-5 py-4 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
+                  className="relative z-10 mt-10 mx-auto flex w-fit px-18  items-center justify-center rounded-xl border border-white/30 bg-white/10  py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
                 >
                   Enquire Now
                 </Link>
@@ -144,18 +114,8 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
       </section>
 
       <section className="bg-[rgba(229,229,229,1)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-        {" "}
         <div className="mx-auto max-w-7xl text-center">
-          <p
-            className="
-    text-lg
-    font-medium
-    bg-[linear-gradient(90deg,#2947AA_0%,#FC7B1B_100%)]
-    bg-clip-text
-    text-transparent
-    inline-block
-  "
-          >
+          <p className="text-lg font-medium bg-[linear-gradient(90deg,#2947AA_0%,#FC7B1B_100%)] bg-clip-text text-transparent inline-block">
             What's Included
           </p>
           <h2 className="mt-3 text-3xl font-medium tracking-tight text-slate-900 sm:text-[2.1rem]">
@@ -170,7 +130,7 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
                 <h3 className="text-lg font-medium tracking-tight">
                   {item.title}
                 </h3>
-                <div className="mx-auto mt-3 h-px w-62 bg-[linear-gradient(90deg,transparent,rgba(45,83,244,0.62),transparent)]" />
+                <div className="mx-auto mt-3 h-px w-62 bg-gradient-to-r   from-[#FC7B1B] to-[#2947AA]" />
                 <p className="mx-auto mt-5 max-w-[25ch] text-md leading-7 text-slate-500">
                   {item.copy}
                 </p>
@@ -220,7 +180,9 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
       <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <p className="text-sm font-medium text-[#2e53f4]">Explore More</p>
+            <p className="text-lg font-medium bg-[linear-gradient(90deg,#2947AA_0%,#FC7B1B_100%)] bg-clip-text text-transparent inline-block">
+              Explore More
+            </p>
             <h2 className="mt-3 text-3xl font-medium tracking-tight text-slate-900 sm:text-[2.05rem]">
               Other Services You May Like
             </h2>
@@ -231,25 +193,28 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
               <Link
                 key={item.slug}
                 href={`/services/${item.slug}`}
-                className="group relative overflow-visible rounded-[1.65rem]"
+                className="group relative overflow-visible "
               >
-                <div className="relative aspect-[1.42/1] overflow-hidden">
+                <div className="relative aspect-[1.42/1] overflow-hidden rounded-[24px]">
                   <Image
                     src={item.galleryImage}
                     alt={item.label}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-contain p-0 transition duration-500 group-hover:scale-[1.02]"
+                    className="object-cover transition duration-500 group-hover:scale-[1.02]"
                   />
-                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-6 text-center">
-                    <h3 className="mx-auto max-w-[14ch] text-[1.05rem] font-medium tracking-tight text-[#152153] drop-shadow-[0_1px_1px_rgba(255,255,255,0.75)]">
+
+                  {/* Text */}
+                  <div className="absolute inset-x-0   z-20 px-6 text-center top-1/2">
+                    <h3 className="mx-auto max-w-[14ch] text-[25px] font-bold text-[#121E46] ">
                       {item.label}
                     </h3>
                   </div>
-                  <span className="absolute bottom-2 right-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#2453f5] text-white transition group-hover:scale-105">
-                    <ArrowIcon />
-                  </span>
                 </div>
+
+                <span className="absolute bottom-2 right-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#2453f5] text-white transition group-hover:scale-105">
+                  <ArrowIcon />
+                </span>
               </Link>
             ))}
           </div>

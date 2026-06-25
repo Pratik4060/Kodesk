@@ -15,7 +15,7 @@ import privateCabinCutImage from "@/assets/images/Services/cut/private.png";
 import coworkingCutImage from "@/assets/images/Services/cut/Coworking.png";
 import managedOfficeCutImage from "@/assets/images/Services/cut/Managed.png";
 import dedicatedDeskCutImage from "@/assets/images/Services/cut/DedicatedDesk.png";
-import eventSpaceCutImage from "@/assets/images/Services/Subtract.png";
+import eventSpaceCutImage from "@/assets/images/Services/cut/eventspace.png";
 import virtualOfficeCutImage from "@/assets/images/Services/cut/Virtual.png";
 import podcastCutImage from "@/assets/images/Services/cut/Podcast.png";
 import flexibleSeatingCutImage from "@/assets/images/Services/cut/Flexible Sitting.png";

@@ -68,9 +68,7 @@ export function Navbar() {
   className="
     inline-flex items-center justify-center
     rounded-xl
-    bg-[linear-gradient(90deg,#3F51B5_0%,#F28C28_50%,#3F51B5_100%)]
-    bg-[length:200%_100%]
-    animate-gradient
+    gradient-card
     px-7 py-3
     text-white
     font-medium

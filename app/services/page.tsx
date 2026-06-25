@@ -141,11 +141,12 @@ export default function ServicesPage() {
                       className="object-cover object-center p-0 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:contrast-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
-                    <div className="absolute left-6 top-6 flex h-[calc(100%-1.5rem)] w-2/3 flex-col justify-center items-start pointer-events-none">
-                      <h3 className="max-w-[16ch] text-[1rem] font-medium leading-tight text-[#17234f] drop-shadow-[0_1px_1px_rgba(255,255,255,0.72)] sm:text-[1.08rem]">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center pointer-events-none">
+                      <h3 className="max-w-[16ch] text-[1.35rem] font-semibold leading-tight text-white transition-all duration-500 ease-out group-hover:-translate-y-10">
                         {service.title}
                       </h3>
-                      <p className="mt-3 max-w-[18ch] text-sm leading-6 text-white opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100">
+
+                      <p className="mt-4 max-w-[22ch] text-sm leading-6 text-white opacity-0 translate-y-4 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                         {service.description}
                       </p>
                     </div>
