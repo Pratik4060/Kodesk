@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Run layout effects after hydration on the client, but fall back to a normal
+// effect during SSR so React doesn't warn.
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 import heroImage from "@/assets/images/hero.png";
 import aboutImage from "@/assets/images/about/main.png";
 import aboutheroImage from "@/assets/images/about/abouthero.png";
@@ -150,9 +157,121 @@ const serviceStrip = [
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeAmenity, setActiveAmenity] = useState(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useIsomorphicLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Respect users who prefer reduced motion — show everything, no animation.
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      // ── Hero: smooth entrance on first paint (above the fold) ──
+      const heroItems = gsap.utils.toArray<HTMLElement>("[data-hero-item]");
+      if (heroItems.length) {
+        gsap.fromTo(
+          heroItems,
+          { y: 42, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 1.1,
+            ease: "power3.out",
+            stagger: 0.16,
+            delay: 0.15,
+          }
+        );
+      }
+
+      // ── Scroll reveals (bidirectional) ──
+      // Each element animates when IT (not its section) enters the viewport, so
+      // content low in tall sections still animates as you reach it. `batch`
+      // groups elements that enter together (e.g. a row of cards) and staggers
+      // them for a polished, professional cascade. The reveal replays every time
+      // an element enters view — whether you scroll down or back up.
+      const fadeEls = gsap.utils.toArray<HTMLElement>("[data-fade]");
+      gsap.set(fadeEls, { y: 48, autoAlpha: 0 });
+
+      const reveal = (batch: Element[]) =>
+        gsap.to(batch, {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+          overwrite: true,
+        });
+
+      const hide = (batch: Element[]) =>
+        gsap.to(batch, {
+          y: 48,
+          autoAlpha: 0,
+          duration: 0.45,
+          ease: "power2.in",
+          overwrite: true,
+        });
+
+      ScrollTrigger.batch(fadeEls, {
+        start: "top 88%",
+        end: "bottom 12%",
+        // Entering from below (scroll down) or from above (scroll up) → animate in.
+        onEnter: reveal,
+        onEnterBack: reveal,
+        // Leaving the viewport in either direction → reset so it animates again.
+        onLeave: hide,
+        onLeaveBack: hide,
+      });
+
+      // ── Stat counters (e.g. "08+", "145") tick up from 0 when in view ──
+      gsap.utils.toArray<HTMLElement>("[data-count]").forEach((el) => {
+        const target = Number(el.dataset.count) || 0;
+        const suffix = el.dataset.suffix ?? "";
+        const pad = Number(el.dataset.pad) || 0;
+        const counter = { value: 0 };
+
+        const render = () => {
+          el.textContent =
+            String(Math.round(counter.value)).padStart(pad, "0") + suffix;
+        };
+
+        const countUp = () =>
+          gsap.to(counter, {
+            value: target,
+            duration: 1.6,
+            ease: "power2.out",
+            onUpdate: render,
+            overwrite: true,
+          });
+
+        const resetCount = () => {
+          gsap.killTweensOf(counter);
+          counter.value = 0;
+          render();
+        };
+
+        render(); // start at zero before it enters view
+
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 88%",
+          end: "bottom 12%",
+          onEnter: countUp,
+          onEnterBack: countUp,
+          onLeave: resetCount,
+          onLeaveBack: resetCount,
+        });
+      });
+
+      // Reveal anything already in view on load, then recalc trigger positions
+      // once images/fonts have settled so start points are accurate.
+      ScrollTrigger.refresh();
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="bg-[#f2f2ef]">
+    <div ref={rootRef} className="bg-[#f2f2ef]">
 
       {/* ── Hero ── */}
       <section className="relative isolate flex min-h-screen flex-col overflow-hidden">
@@ -166,13 +285,13 @@ export default function Home() {
 
         {/* Hero text */}
         <div className="flex flex-1 flex-col items-center justify-center px-4 py-24 text-center sm:py-28">
-          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-white/55 sm:text-[0.7rem] sm:tracking-[0.4em]">
+          <p data-hero-item className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-white/55 sm:text-[0.7rem] sm:tracking-[0.4em]">
             Achieving Success Together
           </p>
-          <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 data-hero-item className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
             Designed for Visionaries
           </h1>
-          <h2 className="mt-2 text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+          <h2 data-hero-item className="mt-2 text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
             <span className="text-[#F28C28]">Built for</span>
             <span className="text-white"> Productivity</span>
           </h2>
@@ -181,7 +300,7 @@ export default function Home() {
         {/* Booking bar */}
         <div className="px-4 pb-10 sm:pb-12">
           <div className="mx-auto max-w-5xl">
-            <div className="grid grid-cols-1 gap-3 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:grid-cols-2 lg:flex lg:items-center">
+            <div data-hero-item className="grid grid-cols-1 gap-3 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:grid-cols-2 lg:flex lg:items-center">
               <input
                 type="text"
                 placeholder="Full Name"
@@ -236,8 +355,8 @@ export default function Home() {
       </div>
 
       {/* ── Our Services ── */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-        <div className="text-center">
+      <section data-animate className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
+        <div data-fade className="text-center">
           <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl lg:text-4xl">Our Services</h2>
           <p className="mt-3 text-sm text-slate-500 sm:text-base">
             Everything you need to grow your business in one premium location
@@ -248,6 +367,7 @@ export default function Home() {
           {homeServices.map((svc) => (
             <Link
               key={svc.title}
+              data-fade
               href={svc.href}
               className="group flex flex-col rounded-[1.5rem] bg-white p-5 shadow-[0_4px_24px_rgba(10,16,40,0.07)] transition hover:shadow-[0_8px_40px_rgba(10,16,40,0.13)] sm:p-6"
             >
@@ -285,7 +405,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mt-10 text-center sm:mt-12">
+        <div data-fade className="mt-10 text-center sm:mt-12">
           <Link
             href="/services"
             className="inline-flex items-center gap-2 rounded-xl bg-[#141f49] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1c2d63] sm:px-8"
@@ -301,10 +421,10 @@ export default function Home() {
       {/* ── About ── */}
        {/* About Section */}
 
-<section className="bg-[#f3f3f3] py-16 sm:py-20 lg:py-24">
+<section data-animate className="bg-[#f3f3f3] py-16 sm:py-20 lg:py-24">
   <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
 
-    <div className="text-center">
+    <div data-fade className="text-center">
       <h2 className="text-3xl font-medium text-black sm:text-4xl lg:text-[42px]">About</h2>
       <p className="mt-3 text-base text-black/70">A new standard for the workday.</p>
     </div>
@@ -315,11 +435,11 @@ export default function Home() {
 
       <div>
 
-        <h3 className="max-w-[620px] text-2xl font-medium leading-[1.2] text-black sm:text-3xl lg:text-[40px]">
+        <h3 data-fade className="max-w-[620px] text-2xl font-medium leading-[1.2] text-black sm:text-3xl lg:text-[40px]">
           Premium Coworking Spaces for Modern Professionals
         </h3>
 
-        <p className="mt-6 max-w-[620px] text-base leading-8 text-black/75 sm:mt-8">
+        <p data-fade className="mt-6 max-w-[620px] text-base leading-8 text-black/75 sm:mt-8">
           At Kodesk, we're redefining the workspace experience. Our premium coworking spaces combine cutting-edge design, world-class amenities, and a vibrant community to create the perfect environment for innovation and growth.
         </p>
 
@@ -335,7 +455,7 @@ export default function Home() {
             "Modern amenities"
           ].map((item) => (
 
-            <div key={item} className="flex items-center gap-4">
+            <div key={item} data-fade className="flex items-center gap-4">
 
               <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#ff8426]">
 
@@ -359,6 +479,7 @@ export default function Home() {
 
         <Link
           href="/about"
+          data-fade
           className="mt-12 inline-flex items-center rounded-md bg-[#13204b] px-9 py-4 text-[17px] text-white transition hover:bg-[#20316c]"
         >
           Learn More About Us
@@ -380,6 +501,7 @@ export default function Home() {
             width={540}
             height={640}
             sizes="(max-width: 1024px) 100vw, 540px"
+            data-fade
             className="h-auto w-full rounded-[10px] object-cover"
           />
 
@@ -389,9 +511,14 @@ export default function Home() {
           <div className="mt-6 grid grid-cols-2 gap-4 sm:mx-auto sm:max-w-md lg:mt-0 lg:max-w-none lg:grid-cols-1 lg:gap-[18px] lg:absolute lg:-left-40 lg:top-[285px]">
 
 
-            <div className="rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-6 py-5 shadow-xl sm:px-8 lg:w-[220px]">
+            <div data-fade className="rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-6 py-5 shadow-xl sm:px-8 lg:w-[220px]">
 
-              <h3 className="text-3xl font-medium leading-none text-white sm:text-4xl lg:text-[44px]">
+              <h3
+                data-count="8"
+                data-suffix="+"
+                data-pad="2"
+                className="text-3xl font-medium leading-none text-white sm:text-4xl lg:text-[44px]"
+              >
                 08+
               </h3>
 
@@ -403,9 +530,12 @@ export default function Home() {
 
 
 
-            <div className="rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-6 py-5 shadow-xl sm:px-8 lg:ml-20 lg:w-[220px]">
+            <div data-fade className="rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-6 py-5 shadow-xl sm:px-8 lg:ml-20 lg:w-[220px]">
 
-              <h3 className="text-3xl font-medium leading-none text-white sm:text-4xl lg:text-[44px]">
+              <h3
+                data-count="145"
+                className="text-3xl font-medium leading-none text-white sm:text-4xl lg:text-[44px]"
+              >
                 145
               </h3>
 
@@ -428,9 +558,9 @@ export default function Home() {
 </section>
 
       {/* ── Our Spaces (Gallery) ── */}
-      <section className="bg-[#141f49] py-20">
+      <section data-animate className="bg-[#141f49] py-20">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div data-fade className="text-center">
             <h2 className="text-3xl font-bold text-white">Our spaces</h2>
             <p className="mt-3 text-sm text-white/60">
               Crafted environments designed for serious work
@@ -438,7 +568,7 @@ export default function Home() {
           </div>
           <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3">
             {galleryImages.map((img, i) => (
-              <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <div key={i} data-fade className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                 <Image
                   src={img.src}
                   alt={img.alt}
@@ -449,7 +579,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="mt-10 text-center">
+          <div data-fade className="mt-10 text-center">
             <Link
               href="/gallery"
               className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-8 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
@@ -461,15 +591,15 @@ export default function Home() {
       </section>
 
       {/* ── World Class Amenities ── */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="text-center">
+      <section data-animate className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div data-fade className="text-center">
           <h2 className="text-3xl font-bold text-slate-900">World Class Amenities</h2>
           <p className="mt-3 text-sm text-slate-500">
             Everything you need to stay productive and comfortable
           </p>
         </div>
         {/* Mobile / small tablet — stacked cards */}
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:hidden">
+        <div data-fade className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:hidden">
           {amenities.map((amenity, i) => (
             <div
               key={amenity.label}
@@ -495,7 +625,7 @@ export default function Home() {
         </div>
 
         {/* Tablet & desktop — horizontal accordion */}
-        <div className="mt-12 hidden h-[440px] gap-3 md:flex">
+        <div data-fade className="mt-12 hidden h-[440px] gap-3 md:flex">
           {amenities.map((amenity, i) => {
             const active = i === activeAmenity;
             return (
@@ -559,8 +689,8 @@ export default function Home() {
       </section>
 
       {/* ── Exclusive Offers ── */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="text-center">
+      <section data-animate className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div data-fade className="text-center">
           <h2 className="text-3xl font-bold text-slate-900">Exclusive Offers</h2>
           <p className="mt-3 text-sm text-slate-500">
             Take advantage of our special promotions and save big
@@ -569,7 +699,7 @@ export default function Home() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
           {/* Card 1 — New Member */}
-          <div className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div data-fade className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <p className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-slate-400">New Member</p>
             <h3 className="mt-3 text-xl font-bold text-slate-900">Membership plans</h3>
             <p className="mt-2 text-sm leading-7 text-slate-500">
@@ -597,7 +727,7 @@ export default function Home() {
           </div>
 
           {/* Card 2 — Popular / Enterprise */}
-          <div className="relative flex flex-col rounded-[1.75rem] bg-[#141f49] p-6 shadow-[0_20px_60px_rgba(13,18,39,0.25)] sm:p-8">
+          <div data-fade className="relative flex flex-col rounded-[1.75rem] bg-[#141f49] p-6 shadow-[0_20px_60px_rgba(13,18,39,0.25)] sm:p-8">
             <span className="absolute right-6 top-6 rounded-full bg-[#F28C28] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white">
               Popular
             </span>
@@ -626,7 +756,7 @@ export default function Home() {
           </div>
 
           {/* Card 3 — Private Cabin */}
-          <div className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div data-fade className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <p className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-slate-400">Exclusive</p>
             <h3 className="mt-3 text-xl font-bold text-slate-900">Private Cabin</h3>
             <p className="mt-2 text-sm leading-7 text-slate-500">
@@ -657,8 +787,8 @@ export default function Home() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="text-center">
+      <section data-animate className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div data-fade className="text-center">
           <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl lg:text-4xl">What Our Members Say</h2>
           <p className="mt-3 text-sm text-slate-500 sm:text-base">
             Join thousands of satisfied professionals who chose Kodesk
@@ -669,6 +799,7 @@ export default function Home() {
           {testimonials.map((t) => (
             <div
               key={t.name}
+              data-fade
               className="flex flex-col rounded-[1.25rem] p-8 shadow-[0_18px_50px_rgba(10,16,40,0.18)] sm:p-10"
               style={{ background: "linear-gradient(160deg, #131f4a 0%, #1c2c63 55%, #2f47a3 100%)" }}
             >
@@ -701,8 +832,8 @@ export default function Home() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="text-center">
+      <section data-animate className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
+        <div data-fade className="text-center">
           <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl lg:text-4xl">Frequently Asked Questions</h2>
           <p className="mt-3 text-sm text-slate-500 sm:text-base">
             Everything you need to know about working at Kodesk. Can't find your answer? Reach out to our team.
@@ -712,6 +843,7 @@ export default function Home() {
           {faqs.map((faq, i) => (
             <div
               key={i}
+              data-fade
               className="overflow-hidden rounded-[0.9rem] shadow-[0_10px_30px_rgba(10,16,40,0.12)]"
               style={{ background: "linear-gradient(90deg, #0f1a40 0%, #1c2c63 55%, #34499d 100%)" }}
             >
@@ -739,16 +871,16 @@ export default function Home() {
       </section>
 
       {/* ── Get in Touch ── */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Get in touch</h2>
-        <p className="mt-3 text-sm text-slate-500 sm:text-base">
+      <section data-animate className="mx-auto w-full max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+        <h2 data-fade className="text-3xl font-bold text-slate-900 sm:text-4xl">Get in touch</h2>
+        <p data-fade className="mt-3 text-sm text-slate-500 sm:text-base">
           We're here to answer your questions and help you find the right workspace.
         </p>
 
         <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:items-start">
 
           {/* Left — contact details */}
-          <div className="space-y-10">
+          <div data-fade className="space-y-10">
 
             {/* Email */}
             <div>
@@ -811,7 +943,7 @@ export default function Home() {
           </div>
 
           {/* Right — map */}
-          <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+          <div data-fade className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
             <iframe
               title="Kodesk Coworking Space location"
               src="https://www.google.com/maps?q=KODESK+Coworking+Space+Baner+Pune&output=embed"
