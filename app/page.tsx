@@ -155,33 +155,33 @@ export default function Home() {
     <div className="bg-[#f2f2ef]">
 
       {/* ── Hero ── */}
-      <section className="relative isolate h-screen overflow-hidden">
+      <section className="relative isolate flex min-h-screen flex-col overflow-hidden">
         <img
           src={heroImage.src}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
           style={{ objectPosition: "50% 80%" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-black/70" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/65 via-black/40 to-black/70" />
 
         {/* Hero text */}
-        <div className="relative flex h-full flex-col items-center justify-center px-4 text-center pb-40">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.4em] text-white/55">
+        <div className="flex flex-1 flex-col items-center justify-center px-4 py-24 text-center sm:py-28">
+          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.3em] text-white/55 sm:text-[0.7rem] sm:tracking-[0.4em]">
             Achieving Success Together
           </p>
-          <h1 className="mt-4 text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
             Designed for Visionaries
           </h1>
-          <h2 className="mt-2 text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+          <h2 className="mt-2 text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
             <span className="text-[#F28C28]">Built for</span>
             <span className="text-white"> Productivity</span>
           </h2>
         </div>
 
         {/* Booking bar */}
-        <div className="absolute bottom-0 left-0 right-0 px-4 pb-10 sm:pb-12">
+        <div className="px-4 pb-10 sm:pb-12">
           <div className="mx-auto max-w-5xl">
-            <div className="flex flex-col gap-3 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:flex-row sm:items-center">
+            <div className="grid grid-cols-1 gap-3 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-[0_24px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:grid-cols-2 lg:flex lg:items-center">
               <input
                 type="text"
                 placeholder="Full Name"
@@ -202,7 +202,7 @@ export default function Home() {
                 placeholder="Location"
                 className="min-w-0 flex-1 rounded-xl border border-white/20 bg-white/15 px-4 py-3 text-sm text-white placeholder:text-white/50 focus:border-white/40 focus:bg-white/20 focus:outline-none transition"
               />
-              <button className="shrink-0 rounded-xl bg-[#141f49] px-7 py-3 text-sm font-semibold text-white shadow-md hover:bg-[#1c2d63] active:scale-[0.98] transition">
+              <button className="shrink-0 rounded-xl bg-[#141f49] px-7 py-3 text-sm font-semibold text-white shadow-md hover:bg-[#1c2d63] active:scale-[0.98] transition sm:col-span-2 lg:col-span-1">
                 Book Now
               </button>
             </div>
@@ -236,7 +236,7 @@ export default function Home() {
       </div>
 
       {/* ── Our Services ── */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:py-18 sm:px-6 lg:py-24 lg:px-8">
+      <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl lg:text-4xl">Our Services</h2>
           <p className="mt-3 text-sm text-slate-500 sm:text-base">
@@ -244,7 +244,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 pb-6 sm:grid-cols-2 sm:gap-7 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-10 grid grid-cols-1 gap-6 pb-6 sm:gap-7 md:grid-cols-3 lg:gap-8">
           {homeServices.map((svc) => (
             <Link
               key={svc.title}
@@ -301,25 +301,25 @@ export default function Home() {
       {/* ── About ── */}
        {/* About Section */}
 
-<section className="bg-[#f3f3f3] py-24">
+<section className="bg-[#f3f3f3] py-16 sm:py-20 lg:py-24">
   <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
 
     <div className="text-center">
-      <h2 className="text-[42px] font-medium text-black">About</h2>
+      <h2 className="text-3xl font-medium text-black sm:text-4xl lg:text-[42px]">About</h2>
       <p className="mt-3 text-base text-black/70">A new standard for the workday.</p>
     </div>
 
-    <div className="mt-16 grid items-center gap-14 lg:grid-cols-2">
+    <div className="mt-12 grid items-center gap-14 sm:mt-16 lg:grid-cols-2">
 
       {/* Left */}
 
       <div>
 
-        <h3 className="max-w-[620px] text-[40px] font-medium leading-[1.2] text-black">
+        <h3 className="max-w-[620px] text-2xl font-medium leading-[1.2] text-black sm:text-3xl lg:text-[40px]">
           Premium Coworking Spaces for Modern Professionals
         </h3>
 
-        <p className="mt-8 max-w-[620px] text-[16px] leading-8 text-black/75">
+        <p className="mt-6 max-w-[620px] text-base leading-8 text-black/75 sm:mt-8">
           At Kodesk, we're redefining the workspace experience. Our premium coworking spaces combine cutting-edge design, world-class amenities, and a vibrant community to create the perfect environment for innovation and growth.
         </p>
 
@@ -370,31 +370,32 @@ export default function Home() {
 
       {/* Right */}
 
-      <div className="relative flex justify-end">
+      <div className="flex justify-center lg:justify-end">
 
-        <div className="relative">
+        <div className="relative w-full max-w-[540px]">
 
           <Image
             src={aboutheroImage}
             alt=""
             width={540}
             height={640}
-            className="rounded-[10px] object-cover"
+            sizes="(max-width: 1024px) 100vw, 540px"
+            className="h-auto w-full rounded-[10px] object-cover"
           />
 
 
           {/* Stats */}
 
-          <div className="absolute -left-40 top-[285px] flex flex-col gap-[18px]">
+          <div className="mt-6 grid grid-cols-2 gap-4 sm:mx-auto sm:max-w-md lg:mt-0 lg:max-w-none lg:grid-cols-1 lg:gap-[18px] lg:absolute lg:-left-40 lg:top-[285px]">
 
 
-            <div className="w-[220px] rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-8 py-5 shadow-xl">
+            <div className="rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-6 py-5 shadow-xl sm:px-8 lg:w-[220px]">
 
-              <h3 className="text-[44px] font-medium leading-none text-white">
+              <h3 className="text-3xl font-medium leading-none text-white sm:text-4xl lg:text-[44px]">
                 08+
               </h3>
 
-              <p className="mt-1 text-[17px] text-white">
+              <p className="mt-1 text-base text-white sm:text-[17px]">
                 Years Experienced
               </p>
 
@@ -402,13 +403,13 @@ export default function Home() {
 
 
 
-            <div className="ml-20 w-[220px] rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-8 py-5 shadow-xl">
+            <div className="rounded-[10px] bg-gradient-to-r from-[#2147FF] to-[#F47A2A] px-6 py-5 shadow-xl sm:px-8 lg:ml-20 lg:w-[220px]">
 
-              <h3 className="text-[44px] font-medium leading-none text-white">
+              <h3 className="text-3xl font-medium leading-none text-white sm:text-4xl lg:text-[44px]">
                 145
               </h3>
 
-              <p className="mt-1 text-[17px] text-white">
+              <p className="mt-1 text-base text-white sm:text-[17px]">
                 Companies Working
               </p>
 
@@ -467,7 +468,34 @@ export default function Home() {
             Everything you need to stay productive and comfortable
           </p>
         </div>
-        <div className="mt-12 flex h-[440px] gap-3">
+        {/* Mobile / small tablet — stacked cards */}
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:hidden">
+          {amenities.map((amenity, i) => (
+            <div
+              key={amenity.label}
+              className="relative overflow-hidden rounded-[1.5rem] p-6 text-white"
+              style={{ background: "linear-gradient(180deg, #F7841E 0%, #8E54A8 52%, #1B3CFF 100%)" }}
+            >
+              <span className="text-xl font-medium text-white/90">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-3 text-xl font-semibold leading-snug">{amenity.title}</h3>
+              <p className="mt-2 text-sm leading-7 text-white/85">{amenity.description}</p>
+              <svg
+                viewBox="0 0 24 24"
+                className="mt-5 h-14 w-14 text-white"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.4}
+              >
+                <path d={amenity.icon} strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          ))}
+        </div>
+
+        {/* Tablet & desktop — horizontal accordion */}
+        <div className="mt-12 hidden h-[440px] gap-3 md:flex">
           {amenities.map((amenity, i) => {
             const active = i === activeAmenity;
             return (
@@ -538,10 +566,10 @@ export default function Home() {
             Take advantage of our special promotions and save big
           </p>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
           {/* Card 1 — New Member */}
-          <div className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-sm">
+          <div className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <p className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-slate-400">New Member</p>
             <h3 className="mt-3 text-xl font-bold text-slate-900">Membership plans</h3>
             <p className="mt-2 text-sm leading-7 text-slate-500">
@@ -569,7 +597,7 @@ export default function Home() {
           </div>
 
           {/* Card 2 — Popular / Enterprise */}
-          <div className="relative flex flex-col rounded-[1.75rem] bg-[#141f49] p-8 shadow-[0_20px_60px_rgba(13,18,39,0.25)]">
+          <div className="relative flex flex-col rounded-[1.75rem] bg-[#141f49] p-6 shadow-[0_20px_60px_rgba(13,18,39,0.25)] sm:p-8">
             <span className="absolute right-6 top-6 rounded-full bg-[#F28C28] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white">
               Popular
             </span>
@@ -598,7 +626,7 @@ export default function Home() {
           </div>
 
           {/* Card 3 — Private Cabin */}
-          <div className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-sm">
+          <div className="flex flex-col rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <p className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-slate-400">Exclusive</p>
             <h3 className="mt-3 text-xl font-bold text-slate-900">Private Cabin</h3>
             <p className="mt-2 text-sm leading-7 text-slate-500">
