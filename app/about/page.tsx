@@ -22,6 +22,21 @@ const stats = [
   { value: "95%", label: "Occupancy Rate" },
 ];
 
+const missionCards = [
+  {
+    icon: missionIcon,
+    eyebrow: "Our Mission",
+    title: "Empowering Businesses Through Inspiring Workspaces",
+    text: "Our mission is to cultivate an ecosystem where businesses of all sizes can access world-class infrastructure and a supportive community that drives sustainable growth and collective innovation.",
+  },
+  {
+    icon: visionIcon,
+    eyebrow: "Our Vision",
+    title: "Redefining the Future of Workspaces",
+    text: "To be the global benchmark for professional workspaces, where technology, design, and hospitality converge to create a frictionless experience for the world's most ambitious teams.",
+  },
+];
+
 const values = [
   {
     icon: innovationIcon,
@@ -70,7 +85,7 @@ export default function AboutPage() {
   return (
     <div className="bg-[#f2f2ef]">
       <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 ">
           <Image
             src={heroImage}
             alt="Kodesk office interior"
@@ -83,19 +98,19 @@ export default function AboutPage() {
         </div>
 
         <div className="relative mx-auto flex min-h-[calc(100vh-7rem)] w-full max-w-7xl flex-col items-center justify-center px-4 pb-20 pt-16 text-center sm:px-6 lg:px-8">
-          <p className="mb-4 text-sm font-medium text-white/80">
+          <p className="mb-4 mt-38 text-sm font-medium text-white/80">
             Kodesk About
           </p>
-          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl mt-8">
             Inspiring Coworking Spaces for Modern Businesses
           </h1>
-          <p className="mt-5 max-w-3xl text-sm leading-7 text-white/78 sm:text-base">
+          <p className="mt-5 max-w-3xl text-sm leading-7 text-white/78 sm:text-base mt-19">
             Kodesk is more than just a coworking space, it&apos;s a thriving
             community built for innovators, entrepreneurs, freelancers,
             startups, and growing enterprises seeking a professional sanctuary.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <div className="mt-18 flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
               className="rounded-[0.9rem] bg-[#24316d] px-5 py-3 text-sm font-medium text-white shadow-[0_14px_24px_rgba(12,20,56,0.28)] transition hover:bg-[#1d2757]"
@@ -160,14 +175,14 @@ export default function AboutPage() {
           </div>
 
           <div className="relative">
-            <div className="overflow-hidden rounded-[1.6rem] shadow-[0_20px_50px_rgba(8,12,28,0.22)]">
+            <div className="overflow-hidden">
               <Image
                 src={storyImage}
                 alt="Conference room interior"
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="absolute bottom-5 left-5 rounded-[1.2rem] bg-[linear-gradient(135deg,#3555ff_0%,#ff8a24_100%)] px-6 py-5 text-white shadow-[0_18px_40px_rgba(36,49,109,0.35)]">
+            <div className="absolute bottom-5 left-1 rounded-[4px] bg-[linear-gradient(135deg,#3555ff_0%,#ff8a24_100%)] px-6 py-5 text-white border border-white hover:bg-[linear-gradient(90deg,#3651AD_5.09%,#16214794_82%)] ">
               <p className="text-3xl font-semibold leading-none">08+</p>
               <p className="mt-1 text-sm text-white/85">Years Experienced</p>
             </div>
@@ -184,37 +199,34 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-12 grid gap-8 lg:grid-cols-2">
-            <article className="rounded-[1rem] bg-white p-7 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
-              <div className="flex items-center gap-3">
-                <Image src={missionIcon} alt="" className="h-10 w-10" />
-                <p className="text-sm text-slate-600">Our Mission</p>
-              </div>
-              <h3 className="mt-6 text-xl font-medium text-slate-900">
-                Empowering Businesses Through Inspiring Workspaces
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-slate-500">
-                Our mission is to cultivate an ecosystem where businesses of all
-                sizes can access world-class infrastructure and a supportive
-                community that drives sustainable growth and collective
-                innovation.
-              </p>
-            </article>
-
-            <article className="rounded-[1rem] bg-white p-7 shadow-[0_10px_30px_rgba(15,23,42,0.06)]">
-              <div className="flex items-center gap-3">
-                <Image src={visionIcon} alt="" className="h-10 w-10" />
-                <p className="text-sm text-slate-600">Our Vision</p>
-              </div>
-              <h3 className="mt-6 text-xl font-medium text-slate-900">
-                Redefining the Future of Workspaces
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-slate-500">
-                To be the global benchmark for professional workspaces, where
-                technology, design, and hospitality converge to create a
-                frictionless experience for the world&apos;s most ambitious
-                teams.
-              </p>
-            </article>
+            {missionCards.map((card) => (
+              <article
+                key={card.eyebrow}
+                className="group relative overflow-hidden rounded-[1.5rem] bg-white p-6 text-white shadow-[0_18px_40px_rgba(15,23,42,0.09)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(15,23,42,0.16)]"
+              >
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,#354bbf_0%,#6c6ba5_45%,#ff841f_100%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="relative z-10 flex h-full min-h-[320px] flex-col">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-[0_10px_22px_rgba(15,23,42,0.12)] transition-transform duration-500 group-hover:scale-105">
+                      <Image
+                        src={card.icon}
+                        alt=""
+                        className="h-10 w-10 object-contain"
+                      />
+                    </div>
+                    <p className="text-base font-medium text-slate-600 transition-colors duration-500 group-hover:text-white/88">
+                      {card.eyebrow}
+                    </p>
+                  </div>
+                  <h3 className="mt-8 max-w-xl text-[clamp(1.55rem,2.2vw,2.15rem)] font-medium leading-[1.15] tracking-tight text-slate-900 transition-colors duration-500 group-hover:text-white">
+                    {card.title}
+                  </h3>
+                  <p className="mt-6 max-w-2xl text-base leading-8 text-slate-500 transition-colors duration-500 group-hover:text-white/88">
+                    {card.text}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 
@@ -243,15 +255,24 @@ export default function AboutPage() {
             {values.map((value) => (
               <article
                 key={value.title}
-                className="rounded-xl border border-slate-200 bg-white px-5 py-6 text-center shadow-[0_10px_26px_rgba(15,23,42,0.03)]"
+                className="group relative overflow-hidden rounded-[1.5rem] bg-white p-6 text-white shadow-[0_18px_40px_rgba(15,23,42,0.09)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(15,23,42,0.16)]"
               >
-                <Image src={value.icon} alt="" className="mx-auto h-16 w-16" />
-                <h3 className="mt-5 text-base font-medium text-slate-900">
-                  {value.title}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600">
-                  {value.text}
-                </p>
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,#354bbf_0%,#6c6ba5_45%,#ff841f_100%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="relative z-10 flex h-full min-h-[290px] flex-col items-center text-center">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-[0_10px_22px_rgba(15,23,42,0.12)] transition-transform duration-500 group-hover:scale-105">
+                    <Image
+                      src={value.icon}
+                      alt=""
+                      className="h-10 w-10 object-contain"
+                    />
+                  </div>
+                  <h3 className="mt-8 text-[clamp(1.4rem,2vw,1.9rem)] font-medium leading-tight tracking-tight text-slate-900 transition-colors duration-500 group-hover:text-white">
+                    {value.title}
+                  </h3>
+                  <p className="mt-5 max-w-xs text-base leading-8 text-slate-500 transition-colors duration-500 group-hover:text-white/88">
+                    {value.text}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
@@ -259,36 +280,29 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-[#ecebea] py-20">
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <div className="overflow-hidden rounded-[0.8rem] shadow-[0_18px_42px_rgba(15,23,42,0.12)]">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="overflow-hidden rounded-[0.75rem] shadow-[0_18px_42px_rgba(15,23,42,0.12)] sm:row-span-2">
               <Image
                 src={communityImage}
                 alt="Private meeting room"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition duration-500 hover:scale-[1.02]"
               />
             </div>
-            <div className="overflow-hidden rounded-[0.8rem] shadow-[0_18px_42px_rgba(15,23,42,0.12)] lg:ml-14">
-              <Image
-                src={growthOneImage}
-                alt="Workspace interior"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="overflow-hidden rounded-[0.8rem] shadow-[0_18px_42px_rgba(15,23,42,0.12)] sm:col-span-2 lg:col-span-1 xl:col-span-2 xl:w-[58%]">
+            <div className="overflow-hidden rounded-[0.75rem] shadow-[0_18px_42px_rgba(15,23,42,0.12)] sm:mt-16">
               <Image
                 src={growthTwoImage}
-                alt="Collaborative meeting room"
-                className="h-full w-full object-cover"
+                alt="Workspace interior"
+                className="h-full w-full object-cover transition duration-500 hover:scale-[1.02]"
               />
             </div>
           </div>
 
-          <div className="self-center">
-            <h2 className="text-3xl font-medium tracking-tight text-slate-900">
+          <div className="self-center lg:pl-6">
+            <h2 className="max-w-3xl text-[clamp(2.2rem,4vw,4.2rem)] font-medium leading-[1.04] tracking-tight text-slate-900">
               A Community Built for Growth &amp; Creativity
             </h2>
-            <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-600">
+            <p className="mt-8 max-w-2xl text-[1.05rem] leading-8 text-slate-700">
               The Kodesk culture is defined by its vibrant energy. We aren&apos;t
               just a place to plug in; we are a destination for professional
               breakthroughs. Through curated networking events, skill-sharing
@@ -296,10 +310,10 @@ export default function AboutPage() {
               hour spent here adds value to your professional journey.
             </p>
 
-            <ul className="mt-8 space-y-5">
+            <ul className="mt-10 space-y-6">
               {communityPoints.map((point) => (
-                <li key={point} className="flex items-start gap-3 text-sm text-slate-700">
-                  <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full border border-[#ff8a24] text-[11px] leading-none text-[#ff8a24]">
+                <li key={point} className="flex items-center gap-4 text-base text-slate-800">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[#ff8a24] text-[12px] leading-none text-[#ff8a24]">
                     &#10003;
                   </span>
                   <span>{point}</span>
@@ -321,21 +335,29 @@ export default function AboutPage() {
 
           <div className="mt-12 grid gap-12 lg:grid-cols-2">
             {team.map((member) => (
-              <article key={member.name} className="mx-auto max-w-md">
-                <div className="overflow-hidden rounded-[0.8rem] bg-slate-100 shadow-[0_16px_36px_rgba(15,23,42,0.09)]">
+              <article
+                key={member.name}
+                className="group relative mx-auto max-w-md overflow-hidden rounded-[1rem] bg-white p-4 shadow-[0_16px_36px_rgba(15,23,42,0.09)] transition-all duration-500 hover:-translate-y-1"
+              >
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,#354bbf_0%,#876a99_58%,#ff851e_100%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="relative z-10">
+                  <div className="overflow-hidden rounded-[0.9rem] bg-slate-100 transition-transform duration-500 group-hover:shadow-[0_18px_36px_rgba(15,23,42,0.12)]">
                   <Image
                     src={member.image}
                     alt={member.name}
-                    className="h-full w-full object-cover"
+                      className="h-full w-full object-cover grayscale transition duration-500 group-hover:grayscale-0"
                   />
+                  </div>
+                  <h3 className="mt-5 text-base font-medium text-slate-900 transition-colors duration-500 group-hover:text-white">
+                    {member.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-slate-500 transition-colors duration-500 group-hover:text-white/82">
+                    {member.role}
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-slate-600 transition-colors duration-500 group-hover:text-white/88">
+                    {member.text}
+                  </p>
                 </div>
-                <h3 className="mt-5 text-base font-medium text-slate-900">
-                  {member.name}
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">{member.role}</p>
-                <p className="mt-3 text-sm leading-7 text-slate-600">
-                  {member.text}
-                </p>
               </article>
             ))}
           </div>
@@ -380,4 +402,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

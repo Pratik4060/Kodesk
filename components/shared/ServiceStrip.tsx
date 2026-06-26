@@ -90,7 +90,7 @@ export function ServiceStrip() {
           type="button"
           aria-label="Scroll services right"
           onClick={() => scrollByAmount(280)}
-          className="mt-9 hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-800 transition hover:bg-slate-50 md:flex"
+          className="mt-9 hidden h-10 w-10 shrink-0 items-center  text-slate-800 transition hover:bg-slate-50 md:flex"
         >
           <ChevronButton direction="right" />
         </button>
