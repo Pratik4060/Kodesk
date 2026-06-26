@@ -36,13 +36,13 @@ export function ServiceStrip() {
   };
 
   return (
-    <div className="bg-white px-3 py-3 shadow-sm sm:px-4">
+    <div className=" px-3 py-3  sm:px-4">
       <div className="flex items-start gap-2 sm:gap-3">
         <button
           type="button"
           aria-label="Scroll services left"
           onClick={() => scrollByAmount(-280)}
-          className="mt-6 hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-800 transition hover:bg-slate-50 md:flex"
+          className="mt-6 hidden h-10 w-10 shrink-0 items-center justify-center text-slate-800  md:flex"
         >
           <ChevronButton direction="left" />
         </button>
@@ -55,14 +55,13 @@ export function ServiceStrip() {
             const href = buildHref(item.slug);
             const active =
               pathname === href ||
-              pathname.startsWith(`${href}/`) ||
-              (pathname === "/services" && item.slug === "day-pass");
+              pathname.startsWith(`${href}/`)  
 
             return (
               <Link
                 key={item.slug}
                 href={href}
-                className={`flex min-w-[108px] flex-col items-center gap-2 rounded-[1.35rem] border border-slate-200/80 bg-white px-3 py-3 text-center transition hover:border-[#2453f5] hover:bg-slate-50 sm:min-w-[132px] ${
+                className={`flex min-w-[108px] flex-col items-center gap-2   px-3 py-3 text-center transition hover:border-[#2453f5] hover:bg-slate-50 sm:min-w-[132px] ${
                   active
                     ? "text-[#2453f5] shadow-[0_10px_28px_rgba(36,49,109,0.08)]"
                     : "text-slate-800"

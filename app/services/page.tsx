@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArcMenu } from "@/components/ui/arcmenu";
+import { ServiceShowcaseCard } from "@/components/shared/ServiceShowcaseCard";
 import { services, servicesOverview } from "@/data/service";
 
 const ctaImage = services.find(
@@ -36,28 +38,6 @@ const showcaseCards = showcaseOrder.reduce<ShowcaseCard[]>((acc, entry) => {
   return acc;
 }, []);
 
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
-      <path
-        d="M7 17L17 7"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-      />
-      <path
-        d="M9 7h8v8"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.9"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export default function ServicesPage() {
   return (
     <section className="bg-[#faf7f1] px-3 pb-0 pt-0 sm:px-4">
@@ -88,14 +68,7 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            <Link
-              href="/contact"
-              aria-label="Book a Tour"
-              className="absolute bottom-6 right-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-[#18306f] text-white shadow-[0_12px_26px_rgba(16,24,40,0.22)] transition hover:scale-105 hover:bg-[#203a85] sm:bottom-8 sm:right-8 sm:h-14 sm:w-14"
-            >
-              <span className="sr-only">Book a Tour</span>
-              <span className="text-2xl leading-none">+</span>
-            </Link>
+            <ArcMenu />
           </div>
         </div>
 
@@ -118,47 +91,9 @@ export default function ServicesPage() {
           </div>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {showcaseCards.map((service, index) => {
-              const bubbleClass =
-                index % 3 === 0
-                  ? "bg-[#ff8a24]"
-                  : index % 3 === 1
-                    ? "bg-[#1f2d62]"
-                    : "bg-[#ff8a24]";
-
-              return (
-                <Link
-                  key={service.slug}
-                  href={`/services/${service.slug}`}
-                  aria-label={service.title}
-                  className="group relative overflow-visible rounded-[1.55rem]"
-                >
-                  <div className="relative aspect-[1.53/1] overflow-hidden rounded-[1.55rem] bg-transparent">
-                    <Image
-                      src={service.galleryImage}
-                      alt={service.label}
-                      fill
-                      className="object-cover object-center p-0 transition-transform duration-500 ease-out group-hover:scale-105 group-hover:contrast-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center pointer-events-none">
-                      <h3 className="max-w-[16ch] text-[1.35rem] font-semibold leading-tight text-white transition-all duration-500 ease-out group-hover:-translate-y-10">
-                        {service.title}
-                      </h3>
-
-                      <p className="mt-4 max-w-[22ch] text-sm leading-6 text-white opacity-0 translate-y-4 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-                        {service.description}
-                      </p>
-                    </div>
-                    <span
-                      className={`absolute bottom-1 right-1 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-[0_10px_18px_rgba(15,23,42,0.18)] transition group-hover:scale-105 ${bubbleClass} sm:bottom-2 sm:right-2`}
-                    >
-                      <ArrowIcon />
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
+            {showcaseCards.map((service) => (
+              <ServiceShowcaseCard key={service.slug} service={service} />
+            ))}
           </div>
         </div>
       </div>

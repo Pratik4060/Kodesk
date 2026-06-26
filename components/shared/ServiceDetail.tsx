@@ -4,16 +4,8 @@ import type { ServiceItem } from "@/data/service";
 import { serviceDetailContent, services } from "@/data/service";
 import communityImage from "@/assets/images/about/Community.png";
 import { ArcMenu } from "@/components/ui/arcmenu";
+import { ServiceShowcaseCard } from "@/components/shared/ServiceShowcaseCard";
 import keybenefits from "@/assets/icons/services/keybenefits.svg";
-import ArrowIcon  from "@/components/ui/arrowicon";
-function Bullet({ children }: { children: string }) {
-  return (
-    <li className="flex gap-3 text-[0.98rem] leading-7 text-slate-700">
-      <span className="mt-2.5 h-2.5 w-2.5 shrink-0 rounded-full border border-[#f3bc8b] bg-[#fff5ea]" />
-      <span>{children}</span>
-    </li>
-  );
-}
 
 
 
@@ -190,32 +182,10 @@ export function ServiceDetail({ service }: { service: ServiceItem }) {
 
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {related.map((item) => (
-              <Link
+              <ServiceShowcaseCard
                 key={item.slug}
-                href={`/services/${item.slug}`}
-                className="group relative overflow-visible "
-              >
-                <div className="relative aspect-[1.42/1] overflow-hidden rounded-[24px]">
-                  <Image
-                    src={item.galleryImage}
-                    alt={item.label}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.02]"
-                  />
-
-                  {/* Text */}
-                  <div className="absolute inset-x-0   z-20 px-6 text-center top-1/2">
-                    <h3 className="mx-auto max-w-[14ch] text-[25px] font-bold text-[#121E46] ">
-                      {item.label}
-                    </h3>
-                  </div>
-                </div>
-
-                <span className="absolute bottom-2 right-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#2453f5] text-white transition group-hover:scale-105">
-                  <ArrowIcon />
-                </span>
-              </Link>
+                service={{ ...item, title: item.label }}
+              />
             ))}
           </div>
         </div>

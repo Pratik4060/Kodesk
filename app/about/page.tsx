@@ -13,6 +13,7 @@ import innovationIcon from "@/assets/icons/about/Innovation.png";
 import collaborationIcon from "@/assets/icons/about/collaboration.png";
 import flexibilityIcon from "@/assets/icons/about/flexiblity.png";
 import excellenceIcon from "@/assets/icons/about/excellence.png";
+import { ArcMenu } from "@/components/ui/arcmenu";
 
 const stats = [
   { value: "145+", label: "Companies Working" },
@@ -109,9 +110,7 @@ export default function AboutPage() {
             </Link>
           </div>
 
-          <div className="absolute bottom-8 right-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-[#1f2e6f] text-2xl leading-none text-white shadow-[0_10px_30px_rgba(0,0,0,0.32)]">
-            +
-          </div>
+          <ArcMenu />
         </div>
       </section>
 
