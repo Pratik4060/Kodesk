@@ -6,7 +6,9 @@ import communityImage from "@/assets/images/about/Community.png";
 import growthOneImage from "@/assets/images/about/Growth1.png";
 import growthTwoImage from "@/assets/images/about/Growth2.png";
 import rajeshImage from "@/assets/images/about/Rajesh.png";
+import rajeshHoverImage from "@/assets/images/about/Rajesh1.png";
 import vikramImage from "@/assets/images/about/Vikram.png";
+import vikramHoverImage from "@/assets/images/about/Vikram1.png";
 import missionIcon from "@/assets/icons/about/mission.png";
 import visionIcon from "@/assets/icons/about/Vision.png";
 import innovationIcon from "@/assets/icons/about/Innovation.png";
@@ -69,12 +71,14 @@ const communityPoints = [
 const team = [
   {
     image: rajeshImage,
+    hoverImage: rajeshHoverImage,
     name: "Rajesh Malhotra",
     role: "Founder & Director",
     text: "Vision-driven leadership focused on innovation, community building, and workspace excellence.",
   },
   {
     image: vikramImage,
+    hoverImage: vikramHoverImage,
     name: "Vikram Singh",
     role: "Community Manager",
     text: "The heartbeat of Kodesk, dedicated to fostering networking and ensuring every member feels integrated into the family.",
@@ -113,15 +117,15 @@ export default function AboutPage() {
           <div className="mt-18 flex flex-wrap justify-center gap-4">
             <Link
               href="/contact"
-              className="rounded-[0.9rem] bg-[#24316d] px-5 py-3 text-sm font-medium text-white shadow-[0_14px_24px_rgba(12,20,56,0.28)] transition hover:bg-[#1d2757]"
+              className="inline-flex items-center rounded-md bg-[#24316d] px-6 py-2.5 text-sm font-medium text-white shadow-[0_10px_20px_rgba(12,20,56,0.18)] transition-colors duration-200 hover:bg-[#1d2757]"
             >
-              Get Started - Book a Tour
+              Book a Tour
             </Link>
             <Link
               href="/pricing"
-              className="rounded-[0.9rem] border border-white/45 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+              className="inline-flex items-center rounded-md bg-white px-6 py-2.5 text-sm font-medium text-[#24316d] border-2 border-[#24316d] transition-colors duration-200 hover:bg-[#f8fbff]"
             >
-              View Memberships
+              View Pricing Plans
             </Link>
           </div>
 
@@ -279,21 +283,21 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-[#ecebea] py-20">
+      <section className="bg-[#ecebea] py-20"> 
         <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="overflow-hidden rounded-[0.75rem] shadow-[0_18px_42px_rgba(15,23,42,0.12)] sm:row-span-2">
+          <div className="grid gap-2 sm:grid-cols-2">
+            <div className="overflow-hidden py-5  sm:row-span-2">
               <Image
-                src={communityImage}
+                src={growthOneImage}
                 alt="Private meeting room"
-                className="h-full w-full object-cover transition duration-500 hover:scale-[1.02]"
+                className="  object-contain transition duration-500 hover:scale-[1.02]"
               />
             </div>
-            <div className="overflow-hidden rounded-[0.75rem] shadow-[0_18px_42px_rgba(15,23,42,0.12)] sm:mt-16">
+            <div className="overflow-hidden  sm:mt-16">
               <Image
                 src={growthTwoImage}
                 alt="Workspace interior"
-                className="h-full w-full object-cover transition duration-500 hover:scale-[1.02]"
+                className="object-cover transition duration-500 hover:scale-[1.02]"
               />
             </div>
           </div>
@@ -337,27 +341,31 @@ export default function AboutPage() {
             {team.map((member) => (
               <article
                 key={member.name}
-                className="group relative mx-auto max-w-md overflow-hidden rounded-[1rem] bg-white p-4 shadow-[0_16px_36px_rgba(15,23,42,0.09)] transition-all duration-500 hover:-translate-y-1"
+                className="group mx-auto max-w-md rounded-[1rem] bg-white p-4"
               >
-                <div className="absolute inset-0 bg-[linear-gradient(135deg,#354bbf_0%,#876a99_58%,#ff851e_100%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="relative z-10">
-                  <div className="overflow-hidden rounded-[0.9rem] bg-slate-100 transition-transform duration-500 group-hover:shadow-[0_18px_36px_rgba(15,23,42,0.12)]">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                      className="h-full w-full object-cover grayscale transition duration-500 group-hover:grayscale-0"
-                  />
+                <div className="overflow-hidden rounded-[0.95rem] bg-slate-100">
+                  <div className="relative aspect-[4/5] w-full">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover grayscale transition duration-500  group-hover:grayscale-0"
+                    />
+                    <Image
+                      src={member.hoverImage}
+                      alt={member.name}
+                      fill
+                      className="absolute inset-0 object-cover opacity-0 transition duration-500 group-hover:opacity-100 group-hover:scale-[1.02]"
+                    />
                   </div>
-                  <h3 className="mt-5 text-base font-medium text-slate-900 transition-colors duration-500 group-hover:text-white">
-                    {member.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-slate-500 transition-colors duration-500 group-hover:text-white/82">
-                    {member.role}
-                  </p>
-                  <p className="mt-3 text-sm leading-7 text-slate-600 transition-colors duration-500 group-hover:text-white/88">
-                    {member.text}
-                  </p>
                 </div>
+                <h3 className="mt-5 text-base font-medium text-slate-900">
+                  {member.name}
+                </h3>
+                <p className="mt-1 text-sm text-slate-500">{member.role}</p>
+                <p className="mt-3 text-sm leading-7 text-slate-600">
+                  {member.text}
+                </p>
               </article>
             ))}
           </div>
