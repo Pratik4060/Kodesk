@@ -33,8 +33,8 @@ export function ArcMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // We place this in the bottom right corner
-    <div className="absolute bottom-8 right-5 sm:bottom-9 sm:right-8 z-50 flex items-center justify-center">
+    // Floating action button in the bottom-right corner
+    <div className="fixed bottom-8 right-5 z-50 flex items-center justify-center sm:bottom-9 sm:right-8">
       
       <AnimatePresence>
         {isOpen && (

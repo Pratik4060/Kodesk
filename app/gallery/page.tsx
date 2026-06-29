@@ -7,6 +7,7 @@ import loungeImage from "@/assets/images/our gallery/comfortable lounge.png";
 import privateOfficeImage from "@/assets/images/our gallery/private office.png";
 import creativeImage from "@/assets/images/our gallery/creative.png";
 import workspaceImage from "@/assets/images/our gallery/Workspace.png";
+import { ArcMenu } from "@/components/ui/arcmenu";
 
 const filters = [
   "All",
@@ -18,12 +19,12 @@ const filters = [
 
 const galleryItems = [
   {
-    title: "Premium Conference Space",
-    image: conferenceImage,
+    title: "Executive Meeting Room",
+    image: meetingRoomImage,
   },
   {
-    title: "Bright Meeting Room",
-    image: meetingRoomImage,
+    title: "Workspace",
+    image: workspaceImage,
   },
   {
     title: "Comfortable Lounge",
@@ -38,8 +39,8 @@ const galleryItems = [
     image: creativeImage,
   },
   {
-    title: "Open Workspace",
-    image: workspaceImage,
+    title: "Conference Room",
+    image: conferenceImage,
   },
 ];
 
@@ -61,7 +62,7 @@ export default function GalleryPage() {
           <p className="text-sm font-medium uppercase tracking-[0.35em] text-white/75">
             Our Gallery
           </p>
-          <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 max-w-3xl font-[family:var(--font-kodchasan)] text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
             Take a visual tour of our premium workspace
           </h1>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -69,7 +70,7 @@ export default function GalleryPage() {
               href="/pricing"
               className="rounded-full bg-[#14275f] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(20,43,119,0.28)] transition hover:bg-[#1e3a8a]"
             >
-              Get Started — Book a Tour
+              Get Started - Book a Tour
             </Link>
             <Link
               href="/contact"
@@ -79,6 +80,12 @@ export default function GalleryPage() {
             </Link>
           </div>
         </div>
+              <div className="relative bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
+                <ArcMenu />
+              </div>
+              
+
+
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -87,10 +94,10 @@ export default function GalleryPage() {
             <button
               key={filter}
               type="button"
-              className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
+              className={`min-w-[10.5rem] rounded-[0.6rem] border px-6 py-3 text-sm font-medium transition sm:text-[0.98rem] ${
                 index === 0
-                  ? "border-[#132169] bg-[#132169] text-white"
-                  : "border-slate-300 bg-white text-slate-700 hover:border-[#132169] hover:text-[#132169]"
+                  ? "border-transparent bg-gradient-to-b from-[#263573] to-[#4a63cf] text-white shadow-[0_10px_24px_rgba(38,53,115,0.22)]"
+                  : "border-[#9aa8e1] bg-white text-slate-800 hover:border-[#263573] hover:text-[#263573]"
               }`}
             >
               {filter}
@@ -98,23 +105,32 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
           {galleryItems.map((item) => (
             <div
               key={item.title}
-              className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08)] transition hover:-translate-y-1 hover:shadow-[0_24px_72px_rgba(15,23,42,0.16)]"
+              className="group relative overflow-hidden rounded-[1.2rem] bg-slate-200 shadow-[0_18px_50px_rgba(15,23,42,0.1)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.18)]"
             >
-              <div className="aspect-[4/3] overflow-hidden bg-slate-100">
+              <div className="relative aspect-[16/11] overflow-hidden bg-slate-100">
                 <Image
                   src={item.image}
                   alt={item.title}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover transition duration-700 ease-out group-hover:scale-110 group-hover:brightness-90"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/18 to-transparent opacity-85 transition duration-500 group-hover:from-black/85 group-hover:via-black/30" />
+                <div className="absolute inset-0 flex items-end p-5 sm:p-6">
+                  <span className="max-w-[90%] translate-y-2 text-lg font-semibold text-white opacity-100 transition duration-500 group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 sm:text-xl">
+                    {item.title}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
+
     </div>
   );
 }
