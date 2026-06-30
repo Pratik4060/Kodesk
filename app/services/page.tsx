@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArcMenu } from "@/components/ui/arcmenu";
 import { ServiceShowcaseCard } from "@/components/shared/ServiceShowcaseCard";
 import { services, servicesOverview } from "@/data/service";
+import serviceimg from "@/assets/images/Services/service.png"
 
 const ctaImage = services.find(
   (service) => service.slug === "managed-office",
@@ -68,8 +69,12 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            <ArcMenu />
           </div>
+                        <div className="relative bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
+                <ArcMenu />
+              </div>
+              
+
         </div>
 
         <div className="mx-auto mt-14 max-w-3xl text-center sm:mt-16">
@@ -102,7 +107,7 @@ export default function ServicesPage() {
         <div className="relative overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src={ctaImage ?? servicesOverview.image}
+              src={serviceimg}
               alt=""
               fill
               className="object-cover object-center"

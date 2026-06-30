@@ -2,33 +2,57 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Phone, MessageCircle, Info } from "lucide-react";
+import { Plus  } from "lucide-react";
 import Link from "next/link";
+import whatsapp from "@/assets/icons/arcmenu/whatsap.png"
+import notinfo from "@/assets/icons/arcmenu/not.png"
+import phone from "@/assets/icons/arcmenu/phone.png"
+import Image from "next/image";
 
 const menuItems = [
   {
-    icon: <MessageCircle size={24} />,
+    icon: (
+      <Image
+        src={whatsapp}
+        alt="WhatsApp"
+        width={24}
+        height={24}
+      />
+    ),
     href: "https://wa.me/",
     color: "text-green-600",
-    x: -20,  // Final horizontal position
-    y: -110, // Final vertical position
+    x: -20,
+    y: -110,
   },
   {
-    icon: <Phone size={22} />,
+    icon: (
+      <Image
+        src={phone}
+        alt="Phone"
+        width={24}
+        height={24}
+      />
+    ),
     href: "tel:+123456789",
     color: "text-blue-600",
     x: -90,
     y: -70,
   },
   {
-    icon: <Info size={22} />,
+    icon: (
+      <Image
+        src={notinfo}
+        alt="Contact"
+        width={24}
+        height={24}
+      />
+    ),
     href: "/contact",
     color: "text-slate-700",
     x: -115,
     y: 10,
   },
 ];
-
 export function ArcMenu() {
   const [isOpen, setIsOpen] = useState(false);
 

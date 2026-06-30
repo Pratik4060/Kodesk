@@ -83,10 +83,11 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className=" right-2 bottom-2  h-16 w-16  items-center justify-center ">
-            <ArcMenu />
-          </div>
         </div>
+                      <div className="relative bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
+                <ArcMenu />
+              </div>
+
       </section>
 
       <section className="mx-auto w-full max-w-5xl px-12 py-16 sm:px-6 lg:px-12">
@@ -185,13 +186,19 @@ export default function ContactPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+            <Link
+              href="https://maps.google.com/?q=KODESK+Coworking+Space+Baner+Pune"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open KODESK Coworking Space in Google Maps"
+              className="block overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(15,23,42,0.12)]"
+            >
               <Image
                 src={mapImage}
                 alt="Kodesk location map"
                 className="h-full w-full object-cover"
               />
-            </div>
+            </Link>
 
             <div className="rounded-[1.75rem] border border-slate-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
               <p className="text-[25px] ">Why Choose Kodesk?</p>

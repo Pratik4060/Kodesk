@@ -129,8 +129,11 @@ export default function AboutPage() {
             </Link>
           </div>
 
-          <ArcMenu />
         </div>
+                      <div className="relative bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2">
+                <ArcMenu />
+              </div>
+
       </section>
 
       <section className="bg-white py-20">
